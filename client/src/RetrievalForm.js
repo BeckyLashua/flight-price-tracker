@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+//import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 
 const RetrievalForm = () => {
@@ -8,7 +9,7 @@ const RetrievalForm = () => {
       const response = await axios.get('http://localhost:3001/flight-data');
       console.log(response.data);
     } catch (error) {
-      console.error('Error making API call:', error);
+      console.error('Error fetching data:', error);
     }
   };
 
