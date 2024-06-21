@@ -6,12 +6,19 @@ import axios from 'axios';
 const RetrievalForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [responseData, setResponseData] = useState(null);
 
   const handleClick = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('http://localhost:3001/flight-data');
+      const requestData = {
+        origin: '',
+        destination: '',
+        airline: ''
+      }
+      const response = await axios.post('http://localhost:3001/flight-data', requestData);
+      setResponseData(response.data);
       console.log(response.data);
     } catch (error) {
       setError('Error fetching data');
@@ -23,10 +30,11 @@ const RetrievalForm = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClick}>
+      <Button variant="contained" color="primary" onClick={handleClick} disabled={loading}>
         {loading ? <CircularProgress size={24} /> : 'Fetch Flight Data'}
       </Button>
       {error && <p>{error}</p>}
+      {responseData && <div>{JSON.stringify(responseData, null, 2)}</div>}
     </div>
   );
 };
