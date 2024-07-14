@@ -31,7 +31,7 @@ const RetrievalForm = () => {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClick} disabled={loading}>
-        {loading ? <CircularProgress size={24} /> : 'Fetch Flight Data'}
+        {loading ? <CircularProgress size={24} /> : 'Display Flight Prices'}
       </Button>
       {error && <p>{error}</p>}
       {responseData && <div>{JSON.stringify(responseData, null, 2)}</div>}
