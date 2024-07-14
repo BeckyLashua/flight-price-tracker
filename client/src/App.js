@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import RetrievalForm from './RetrievalForm';
 import './App.css';
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
       <header className="App-header">
         <h1> Flight Price Tracker </h1>
       </header>
+      <RetrievalForm />
     </div>
   );
 }
