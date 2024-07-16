@@ -3,6 +3,7 @@ const pool = require('./db');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const { fetchLowestPrice } = require('./fetchLowestPrice');
 
 const port = process.env.SERVER_PORT || 3001;
 const host = process.env.SERVER_HOST || 'localhost';
@@ -15,7 +16,6 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json());
 
-// Nock route for testing database connection
 app.get('/testdb', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -32,16 +32,19 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.post('/flight-data', (req, res) => {
-  const searchData = { originPlace, destinationPlace, airline} = req.body;
+app.post('/flight-data', async (req, res) => {
+  const searchData = { outboundDate, origin, destination, airline } = req.body;
   console.log(searchData);
-  const flight_data = {
-    price: '234.56',
-    date: '2024-06-21',
-    timestamp: new Date()
-  };
+  let flightData = {};
+  try {
+    const lowestEntry = await fetchLowestPrice(searchData);
+    flightData = lowestEntry;
+    console.log('Entry with the lowest price: ', lowestEntry);
+  } catch(error) {
+    console.error('Error:', error); 
+  }
 
-  res.json(flight_data);
+  res.json(flightData);
 });
 
 app.listen(port, () => {

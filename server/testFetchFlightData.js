@@ -3,7 +3,7 @@ const { insertFlightData } = require('./fetchFlightData');
 
 const flightData = [
   {
-    outbound_date: "2024-05-13T08:00:00",
+    outbound_date: "2024-07-15T08:00:00",
     origin_airport_code: "BOS",
     destination_airport_code: "ORD",
     carrier_code: "AA",
@@ -12,7 +12,7 @@ const flightData = [
     nonstop: true
   },
   {
-    outbound_date: "2024-06-01T08:00:00",
+    outbound_date: "2024-07-15T08:00:00",
     origin_airport_code: "BOS",
     destination_airport_code: "ORD",
     carrier_code: "WN",
@@ -21,7 +21,7 @@ const flightData = [
     nonstop: true
   },
   {
-    outbound_date: "2024-03-01T08:00:00",
+    outbound_date: "2024-07-15T08:00:00",
     origin_airport_code: "BOS",
     destination_airport_code: "ORD",
     carrier_code: "AA",

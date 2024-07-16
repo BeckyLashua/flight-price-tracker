@@ -13,9 +13,10 @@ const RetrievalForm = () => {
     setError(null);
     try {
       const requestData = {
-        origin: '',
-        destination: '',
-        airline: ''
+        outboundDate: '2024-07-15T08:00:00',
+        origin: 'BOS',
+        destination: 'ORD',
+        airline: 'WN'
       }
       const response = await axios.post('http://localhost:3001/flight-data', requestData);
       setResponseData(response.data);
