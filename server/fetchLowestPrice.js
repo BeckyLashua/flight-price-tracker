@@ -2,8 +2,10 @@
 require('dotenv').config();
 const pool = require('./db');
 
-const fetchLowestPrice = async(data) => {
+const fetchLowestPrices = async(data, numOfDays) => {
   const client = await pool.connect();
+  let flights = [];
+  let current_date = new Date(data.outboundDate);
 
   try {
     const query = `
@@ -18,13 +20,21 @@ const fetchLowestPrice = async(data) => {
       ORDER BY price ASC  
       LIMIT 1;
     `;
-    const result = await client.query(query, [data.outboundDate, data.origin, data.destination, data.airline]);
-    return result.rows[0];
+    for (let i = 0; i < numOfDays; i++) {
+      const result = await client.query(query, [current_date.toISOString(), data.origin, data.destination, data.airline]);
+      if (result.rows.length > 0) {
+        flights.push(result.rows[0]);
+      } else {
+        flights.push({});
+      }
+      current_date = new Date(current_date.setDate(current_date.getDate() + 1));  
+    }
   } catch (error) {
     console.error('Error querying for lowest price entries', error.stack);
   } finally {
     client.release();
   }
+  return flights;
 };
 
-module.exports = { fetchLowestPrice };
+module.exports = { fetchLowestPrices };

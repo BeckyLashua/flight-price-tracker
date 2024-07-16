@@ -6,35 +6,6 @@ const { insertFlightData } = require('../fetchFlightData');
 const { generateFlights } = require('./generateFlights');
 
 const testFlightData = generateFlights(10, '2023-06-01', '2024-06-01');
-const flightData = [
-  {
-    outbound_date: "2024-07-15T08:00:00",
-    origin_airport_code: "BOS",
-    destination_airport_code: "ORD",
-    carrier_code: "AA",
-    price: 200.0,
-    currency: "USD",
-    nonstop: true
-  },
-  {
-    outbound_date: "2024-07-15T08:00:00",
-    origin_airport_code: "BOS",
-    destination_airport_code: "ORD",
-    carrier_code: "WN",
-    price: 100.0,
-    currency: "USD",
-    nonstop: true
-  },
-  {
-    outbound_date: "2024-07-15T08:00:00",
-    origin_airport_code: "BOS",
-    destination_airport_code: "ORD",
-    carrier_code: "AA",
-    price: 274.0,
-    currency: "USD",
-    nonstop: true
-  },
-];
 
 const testInsertFlightData = async () => {
   if (testFlightData) {

@@ -3,7 +3,8 @@ const pool = require('./db');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { fetchLowestPrice } = require('./fetchLowestPrice');
+const { fetchLowestPrices } = require('./fetchLowestPrice');
+
 
 const port = process.env.SERVER_PORT || 3001;
 const host = process.env.SERVER_HOST || 'localhost';
@@ -35,16 +36,13 @@ app.get('/', (req, res) => {
 app.post('/flight-data', async (req, res) => {
   const searchData = { outboundDate, origin, destination, airline } = req.body;
   console.log(searchData);
-  let flightData = {};
   try {
-    const lowestEntry = await fetchLowestPrice(searchData);
-    flightData = lowestEntry;
-    console.log('Entry with the lowest price: ', lowestEntry);
+    const lowestPriceEntries = await fetchLowestPrices(searchData, 10);
+    console.log('Entries with the lowest price: ', lowestPriceEntries);
+    res.json(lowestPriceEntries);
   } catch(error) {
     console.error('Error:', error); 
   }
-
-  res.json(flightData);
 });
 
 app.listen(port, () => {
