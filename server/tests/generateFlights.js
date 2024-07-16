@@ -29,10 +29,11 @@ const generateFlights = (flightsPerDay, date1String, date2String) => {
         currency,
         nonstop
       });
+
+      isBoston = !isBoston;
     }
     // update the day by one day
     current_date = new Date(current_date.setDate(current_date.getDate() + 1));
-    isBoston = !isBoston;
   }
 
   return flights;
