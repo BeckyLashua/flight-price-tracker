@@ -13,7 +13,7 @@ const insertFlightData = async(flights) => {
           flight.outbound_date, 
           flight.origin_airport_code, 
           flight.destination_airport_code, 
-          flight.carrier_code, 
+          flight.airline_code, 
           flight.price, 
           flight.currency, 
           flight.nonstop
