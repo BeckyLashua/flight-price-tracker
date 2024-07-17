@@ -1,44 +1,58 @@
 import React, { useState } from 'react';
 import FlightChart from './FlightChart';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import { FormControl, InputLabel, Button, Box, CircularProgress, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 
 const RetrievalForm = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [responseData, setResponseData] = useState(null);
-  const [outboundDate, setOutboundDate] = useState(null);
-  const [origin, setOrigin] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const [airline, setAirline] = useState(null);
-  const [numOfDays, setNumOfDays] = useState(0);
-  const [endDate, setEndDate] = useState(null);
+  const [formValues, setFormValues] = useState({
+    origin: '',
+    destination: '',
+    airline: '',
+  });
+  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState('');
   const [showChart, setShowChart] = useState(false);
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
-
-  const handleClick = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    setError(null);
     setShowChart(false);
-    setOutboundDate('2023-08-04T08:00:00');
-    setOrigin('BOS');
-    setDestination('ORD');
-    setAirline('AA');
-    setNumOfDays(365);
 
+    const { origin, destination, airline } = formValues;
+    if ( !origin || !destination || !airline ) {
+      setError('Please fill in all fields.');
+      setLoading(false);
+      return;
+    }
     try {
-      const startDate = new Date(outboundDate);
-      const endDate = new Date(startDate.setDate(startDate.getDate() + numOfDays));
-      setEndDate(endDate.toISOString());
-
+      const today = new Date();
+      console.log("today: ", today);
+      const endDate = new Date(today.setDate(today.getDate() -1 ));
+      console.log("enddate: ", endDate);
+      const startDate = new Date(endDate.setDate(endDate.getDate() - 365));
+      console.log("startdate: ", startDate);
+      const startDateString = startDate.toISOString();
+      const endDateString = endDate.toISOString();
+      setEndDate(endDateString);
+      setStartDate(startDateString);
+      console.log("startdate dtring: ", startDateString);
+      console.log("enddate dtring: ", endDateString);
+  
+    
       const requestData = {
-        outboundDate: outboundDate,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
         origin: origin,
         destination: destination,
-        airline: airline,
-        numOfDays: numOfDays
+        airline: airline
       }
 
       const response = await axios.post('http://localhost:3001/flight-data', requestData);
@@ -54,16 +68,57 @@ const RetrievalForm = () => {
   };
 
   return (
-    <div>
-      <Button variant="contained" color="primary" onClick={handleClick} disabled={loading}>
-        {loading ? <CircularProgress size={24} /> : 'Display Flight Prices'}
-      </Button>
+    <Box sx={{ mt: 4 }}>
+      <form onSubmit={handleSubmit}>
+        <Box>
+          <FormControl>
+              <InputLabel id="origin">Origin Airport</InputLabel>
+              <Select
+                labelId="origin"
+                name="origin"
+                value={formValues.origin}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="BOS">BOS</MenuItem>
+                <MenuItem value="ORD">ORD</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <InputLabel id="destination">Destination Airport</InputLabel>
+              <Select
+                labelId="destination"
+                name="destination"
+                value={formValues.destination}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="BOS">BOS</MenuItem>
+                <MenuItem value="ORD">ORD</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl>
+              <InputLabel id="airline">Destination Airport</InputLabel>
+              <Select
+                labelId="airline"
+                name="airline"
+                value={formValues.airline}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="AA">American Airlines</MenuItem>
+                <MenuItem value="WN">Southwest</MenuItem>
+              </Select>
+          </FormControl>
+          <Button type="submit" variant="contained" color="primary" disabled={loading}>
+            {loading ? <CircularProgress size={24} /> : 'Display Flight Prices'}
+          </Button>
+        </Box>
+      </form>
+      
       {error && <p>{error}</p>}
       {showChart && responseData && 
       (
-        <FlightChart flightData={ responseData } startDate = { outboundDate } endDate = { endDate }/>
+        <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
       )}
-    </div>
+    </Box>
   );
 };
 

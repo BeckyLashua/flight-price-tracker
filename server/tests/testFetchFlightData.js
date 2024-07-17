@@ -5,7 +5,7 @@ require('dotenv').config();
 const { insertFlightData } = require('../fetchFlightData');
 const { generateFlights } = require('./generateFlights');
 
-const testFlightData = generateFlights(10, '2023-06-01', '2024-06-01');
+const testFlightData = generateFlights(10, '2023-06-01', '2024-07-17');
 
 const testInsertFlightData = async () => {
   if (testFlightData) {

@@ -3,7 +3,7 @@ const pool = require('./db');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { fetchLowestPrices } = require('./fetchLowestPrice');
+const { fetchLowestPrices } = require('./fetchLowestPrices');
 
 
 const port = process.env.SERVER_PORT || 3001;
@@ -34,11 +34,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/flight-data', async (req, res) => {
-  const { outboundDate, origin, destination, airline, numOfDays } = req.body;
-  const data = { outboundDate, origin, destination, airline };
+  const { startDate, endDate, origin, destination, airline} = req.body;
+  const data = { startDate, endDate, origin, destination, airline };
+  console.log('startDate: ', startDate);
+  console.log('endDate: ', endDate);
   try {
-    const lowestPriceEntries = await fetchLowestPrices(data, numOfDays);
-    console.log('Entries with the lowest price: ', lowestPriceEntries);
+    const lowestPriceEntries = await fetchLowestPrices(data);
+    //console.log('Entries with the lowest price: ', lowestPriceEntries);
     res.json(lowestPriceEntries);
   } catch(error) {
     console.error('Error:', error); 
