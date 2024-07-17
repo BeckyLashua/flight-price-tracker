@@ -34,10 +34,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/flight-data', async (req, res) => {
-  const searchData = { outboundDate, origin, destination, airline } = req.body;
-  console.log(searchData);
+  const { outboundDate, origin, destination, airline, numOfDays } = req.body;
+  const data = { outboundDate, origin, destination, airline };
   try {
-    const lowestPriceEntries = await fetchLowestPrices(searchData, 10);
+    const lowestPriceEntries = await fetchLowestPrices(data, numOfDays);
     console.log('Entries with the lowest price: ', lowestPriceEntries);
     res.json(lowestPriceEntries);
   } catch(error) {

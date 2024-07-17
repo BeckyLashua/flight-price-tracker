@@ -22,8 +22,10 @@ const fetchLowestPrices = async(data, numOfDays) => {
     `;
     for (let i = 0; i < numOfDays; i++) {
       const result = await client.query(query, [current_date.toISOString(), data.origin, data.destination, data.airline]);
+      if (result.rows.length > 0) {
+        flights.push(result.rows[0]);
+      }
       console.log(result);
-      flights.push(result.rows[0]);
       current_date = new Date(current_date.setDate(current_date.getDate() + 1));  
     }
   } catch (error) {
