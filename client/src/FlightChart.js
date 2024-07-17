@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 import { eachDayOfInterval, format } from 'date-fns';
+import { Container } from '@mui/material';
 
 
 const FlightChart = ({ flightData, startDate, endDate}) => {
@@ -78,7 +79,6 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
         },
       };
 
-      // Destroy chart instance that might already exist
       if (instance.current) {
         instance.current.destroy();
       }
@@ -94,7 +94,11 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
     }
   }, [flightData, startDate, endDate]);
 
-  return <canvas ref={chartRef} />;
+  return (
+   <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%', height: '400px', margin: '0 auto' }}>
+      <canvas ref={chartRef} />
+   </Container>
+  )
 };
 
 export default FlightChart;
