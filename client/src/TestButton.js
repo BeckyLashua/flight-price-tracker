@@ -29,8 +29,8 @@ const TestButton = () => {
       //const endDate = new Date();
       //const startDate = new Date(endDate.setDate(endDate.getDate() - 365));
       //setEndDate(endDate.toISOString());
-      console.log('startDate: ', startDate);
-      console.log('endDate: ', endDate);
+      //console.log('startDate: ', startDate);
+      //console.log('endDate: ', endDate);
 
       const requestData = {
         startDate: startDate,

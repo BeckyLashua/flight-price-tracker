@@ -53,11 +53,27 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
               type: 'time',
               time: {
                 unit: 'day',
+                tooltipFormat: 'MM-dd-yyyy',
+                displayFormats: {
+                  day: 'MM-dd-yyyy',
+                },
               },
             },
             y: {
               beginAtZero: true,
             }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const label = 'Lowest Price' || 'No flights for this date.';
+                  const date = context.parsed.x; 
+                  const value = context.parsed.y !== null ? ` $${context.parsed.y}` : '';
+                  return `${label} : ${value}`;
+                },
+              },
+            },
           },
         },
       };
