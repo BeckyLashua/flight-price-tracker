@@ -95,7 +95,15 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
   }, [flightData, startDate, endDate]);
 
   return (
-   <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%', height: '400px', margin: '0 auto' }}>
+   <Container sx={
+    { 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      width: '80%', 
+      height: '400px', 
+      margin: '0 auto' 
+    }}>
       <canvas ref={chartRef} />
    </Container>
   )

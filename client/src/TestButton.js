@@ -15,7 +15,8 @@ const TestButton = () => {
   const [endDate, setEndDate] = useState('');
   const [showChart, setShowChart] = useState(false);
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
     setLoading(true);
     setError(null);
     setShowChart(false);
@@ -33,11 +34,11 @@ const TestButton = () => {
       //console.log('endDate: ', endDate);
 
       const requestData = {
-        startDate: startDate,
-        endDate: endDate,
-        origin: origin,
-        destination: destination,
-        airline: airline
+        startDate: '2023-07-19T08:00:00',
+        endDate: '2024-07-17T08:00:00',
+        origin: 'BOS',
+        destination: 'ORD',
+        airline: 'AA'
       }
 
       const response = await axios.post('http://localhost:3001/flight-data', requestData);
@@ -61,7 +62,8 @@ const TestButton = () => {
       {showChart && responseData && 
       (
         <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
-      )}
+      )
+      }
     </div>
   );
 };
