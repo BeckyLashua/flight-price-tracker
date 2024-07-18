@@ -32,27 +32,20 @@ const RetrievalForm = () => {
       setLoading(false);
       return;
     }
+    
     try {
       const today = new Date();
-      console.log("today: ", today);
-      const endDate = new Date(today.setDate(today.getDate() -1 ));
-      console.log("enddate: ", endDate);
-      const startDate = new Date(endDate.setDate(endDate.getDate() - 365));
-      console.log("startdate: ", startDate);
-      const startDateString = startDate.toISOString();
-      const endDateString = endDate.toISOString();
-      setEndDate(endDateString);
-      setStartDate(startDateString);
-      console.log("startdate dtring: ", startDateString);
-      console.log("enddate dtring: ", endDateString);
-  
-    
+      const endDate = new Date(today.setDate(today.getDate()));
+      const startDate = new Date(today.setDate(today.getDate() - 365 ));
+      setEndDate(endDate.toISOString());
+      setStartDate(startDate.toISOString());
+
       const requestData = {
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        origin: origin,
-        destination: destination,
-        airline: airline
+        startDate: startDate,
+        endDate: endDate,
+        origin: formValues.origin,
+        destination: formValues.destination,
+        airline: formValues.airline
       }
 
       const response = await axios.post('http://localhost:3001/flight-data', requestData);
