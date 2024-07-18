@@ -26,7 +26,6 @@ const fetchLowestPrices = async(data) => {
       if (result.rows.length > 0) {
         flights.push(result.rows[0]);
       } else {
-        console.log('currentDate: ', currentDate);
         flights.push({outbound_date: currentDate, price: null})
       }
       currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
