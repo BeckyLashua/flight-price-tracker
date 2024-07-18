@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import FlightChart from './FlightChart';
-import { FormControl, InputLabel, Button, Box, CircularProgress, Container, Select, MenuItem } from '@mui/material';
+import PriceDisplay from './PriceDisplay';
+import { FormControl, Typography, InputLabel, Button, Box, CircularProgress, Container, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 
 const RetrievalForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [responseData, setResponseData] = useState(null);
+  const [lowestPrice, setLowestPrice] = useState(null);
+  const [lowestDate, setLowestDate] = useState(null);
   const airports = ['BOS', 'ORD'];
   const airlineMap = {
       'American Airlines': 'AA',
@@ -40,6 +43,8 @@ const RetrievalForm = () => {
     setError('');
     setLoading(true);
     setShowChart(false);
+    setLowestDate('');
+    setLowestPrice(100);
 
     const { origin, destination, airline } = formValues;
     if ( !origin || !destination || !airline ) {
@@ -131,14 +136,18 @@ const RetrievalForm = () => {
         </Box>
       </form>
       
-      {error && <p>{error}</p>}
-      {showChart && responseData && 
-      (
-        <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
-      )}
+      {error && <Typography color="error">{error}</Typography>}
       <Button variant="outlined" color="secondary" onClick={handleReset}>
             CLEAR
-          </Button>
+      </Button>
+      {showChart && responseData && lowestDate != null && lowestPrice != null &&
+      (
+        <>
+        <PriceDisplay price={ lowestPrice } date={ lowestDate } />
+
+        <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
+        </>
+      )}
     </Box> 
   );
 };
