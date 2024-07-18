@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import FlightChart from './FlightChart';
-import { FormControl, InputLabel, Button, Box, CircularProgress, Select, MenuItem } from '@mui/material';
+import { FormControl, InputLabel, Button, Box, CircularProgress, Container, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 
 const RetrievalForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [responseData, setResponseData] = useState(null);
+  const airports = ['BOS', 'ORD'];
+  const airlines = ['American Airlines', 'Southwest Airlines'];
   const [formValues, setFormValues] = useState({
     origin: '',
     destination: '',
@@ -68,37 +70,48 @@ const RetrievalForm = () => {
           <FormControl>
               <InputLabel id="origin">Origin Airport</InputLabel>
               <Select
-                labelId="origin"
-                name="origin"
                 value={formValues.origin}
-                onChange={handleInputChange}
+                onChange={ handleInputChange }
+                name="origin"
               >
-                <MenuItem value="BOS">BOS</MenuItem>
-                <MenuItem value="ORD">ORD</MenuItem>
+                {airports
+                  .filter(airport => airport !== formValues.destination)
+                  .map((airport) => (
+                    <MenuItem key={airport} value={airport}>
+                      {airport}
+                    </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl>
               <InputLabel id="destination">Destination Airport</InputLabel>
               <Select
-                labelId="destination"
-                name="destination"
                 value={formValues.destination}
-                onChange={handleInputChange}
+                onChange={ handleInputChange }
+                name="destination"
               >
-                <MenuItem value="BOS">BOS</MenuItem>
-                <MenuItem value="ORD">ORD</MenuItem>
+                {airports
+                  .filter(airport => airport !== formValues.origin)
+                  .map((airport) => (
+                    <MenuItem key={airport} value={airport}>
+                      {airport}
+                    </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl>
               <InputLabel id="airline">Destination Airport</InputLabel>
               <Select
-                labelId="airline"
-                name="airline"
                 value={formValues.airline}
-                onChange={handleInputChange}
+                onChange={ handleInputChange }
+                name='airline'
               >
-                <MenuItem value="AA">American Airlines</MenuItem>
-                <MenuItem value="WN">Southwest</MenuItem>
+                {airlines
+                  .map((airline) => (
+                    <MenuItem key={airline} value={airline}>
+                      {airline}
+                    </MenuItem>
+                ))}
               </Select>
           </FormControl>
           <Button type="submit" variant="contained" color="primary" disabled={loading}>
