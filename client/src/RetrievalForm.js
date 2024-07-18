@@ -8,7 +8,11 @@ const RetrievalForm = () => {
   const [error, setError] = useState(false);
   const [responseData, setResponseData] = useState(null);
   const airports = ['BOS', 'ORD'];
-  const airlines = ['American Airlines', 'Southwest Airlines'];
+  const airlineMap = {
+      'American Airlines': 'AA',
+      'Southwest Airlines': 'WN'
+    };
+  const airlines = Object.keys(airlineMap);
   const [formValues, setFormValues] = useState({
     origin: '',
     destination: '',
@@ -21,6 +25,14 @@ const RetrievalForm = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleReset = () => {
+    setFormValues({
+      origin: '',
+      destination: '',
+      airline: '',
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -100,15 +112,14 @@ const RetrievalForm = () => {
               </Select>
             </FormControl>
             <FormControl>
-              <InputLabel id="airline">Destination Airport</InputLabel>
+              <InputLabel id="airline">Airline</InputLabel>
               <Select
                 value={formValues.airline}
                 onChange={ handleInputChange }
                 name='airline'
               >
-                {airlines
-                  .map((airline) => (
-                    <MenuItem key={airline} value={airline}>
+                {airlines.map((airline) => (
+                    <MenuItem key={airlineMap[airline]} value={airlineMap[airline]}>
                       {airline}
                     </MenuItem>
                 ))}
@@ -125,7 +136,10 @@ const RetrievalForm = () => {
       (
         <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
       )}
-    </Box>
+      <Button variant="outlined" color="secondary" onClick={handleReset}>
+            CLEAR
+          </Button>
+    </Box> 
   );
 };
 
