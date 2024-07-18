@@ -38,6 +38,21 @@ const RetrievalForm = () => {
     });
   };
 
+  const calculateLowestPrice = (flights) => {
+    let lowestPrice = flights[0];
+    let cheapestDate = '';
+    for (let i = 1; i < flights.length(); i++) {
+      if (flights[i].price < lowestPrice) {
+        lowestPrice = flights[i].price;
+        cheapestDate = flights[i].outbound_date;
+      }
+    }
+    const price = '';
+    const date= '';
+    return { lowestPrice: price, cheapestDate: date};
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
