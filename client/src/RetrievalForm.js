@@ -23,6 +23,7 @@ const RetrievalForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
     setShowChart(false);
 
@@ -63,7 +64,7 @@ const RetrievalForm = () => {
   return (
     <Box sx={{ mt: 4 }}>
       <form onSubmit={handleSubmit}>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: '0 auto' }}>
           <FormControl>
               <InputLabel id="origin">Origin Airport</InputLabel>
               <Select
