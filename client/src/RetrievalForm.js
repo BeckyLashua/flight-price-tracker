@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import FlightChart from './FlightChart';
 import { FormControl, InputLabel, Button, Box, CircularProgress, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
+import LowestPriceDisplay from './LowestPriceDisplay';
 
 const RetrievalForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [airportError, setAirportError] = useState(false);
   const [responseData, setResponseData] = useState(null);
   const [formValues, setFormValues] = useState({
     origin: '',
@@ -16,6 +16,7 @@ const RetrievalForm = () => {
   const [endDate, setEndDate] = useState('');
   const [startDate, setStartDate] = useState('');
   const [showChart, setShowChart] = useState(false);
+  const [showPriceDisplay, setShowPriceDisplay] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,9 +26,9 @@ const RetrievalForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setAirportError(false);
     setLoading(true);
     setShowChart(false);
+    setShowPriceDisplay(false);
 
     const { origin, destination, airline } = formValues;
     if ( !origin || !destination || !airline ) {
@@ -60,6 +61,7 @@ const RetrievalForm = () => {
       setResponseData(response.data);
       console.log(response.data);
       setShowChart(true);
+      setShowPriceDisplay(true);
     } catch (error) {
       setError('Error fetching data');
       console.error('Error fetching data:', error);
@@ -115,6 +117,10 @@ const RetrievalForm = () => {
       </form>
       
       {error && <p>{error}</p>}
+      {showPriceDisplay && responseData &&
+      (
+        <LowestPriceDisplay date = "1/12/2024" price = "43" />
+      )}
       {showChart && responseData && 
       (
         <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
