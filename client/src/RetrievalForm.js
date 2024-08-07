@@ -6,6 +6,7 @@ import axios from 'axios';
 const RetrievalForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [airportError, setAirportError] = useState(false);
   const [responseData, setResponseData] = useState(null);
   const [formValues, setFormValues] = useState({
     origin: '',
@@ -24,12 +25,18 @@ const RetrievalForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setAirportError(false);
     setLoading(true);
     setShowChart(false);
 
     const { origin, destination, airline } = formValues;
     if ( !origin || !destination || !airline ) {
       setError('Please fill in all fields.');
+      setLoading(false);
+      return;
+    } 
+    if ( destination === origin) {
+      setError('Origin airport and destination airport cannot be the same.')
       setLoading(false);
       return;
     }
@@ -90,7 +97,7 @@ const RetrievalForm = () => {
               </Select>
             </FormControl>
             <FormControl>
-              <InputLabel id="airline">Destination Airport</InputLabel>
+              <InputLabel id="airline">Airline</InputLabel>
               <Select
                 labelId="airline"
                 name="airline"
