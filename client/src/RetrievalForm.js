@@ -117,10 +117,12 @@ const RetrievalForm = () => {
       </form>
       
       {error && <p>{error}</p>}
+
       {showPriceDisplay && responseData &&
       (
-        <LowestPriceDisplay date = "1/12/2024" price = "43" />
+        <LowestPriceDisplay flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
       )}
+
       {showChart && responseData && 
       (
         <FlightChart flightData={ responseData } startDate = { startDate } endDate = { endDate }/>
