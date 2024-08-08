@@ -1,8 +1,10 @@
+const path = require('path');
+const result = require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+const axios = require('axios');
 const dotenv = require('dotenv');
 const { Pool } = require('pg');
 
 // Load environment variables from .env file
-const result = dotenv.config();
 if (result.error) {
   throw result.error;
 }
