@@ -8,12 +8,11 @@ const insertFlightData = async(flights) => {
   try {
     for (const flight of flights) {
       await client.query(
-        'INSERT INTO flights (outbound_date, origin_airport_code, destination_airport_code, airline_code, price, currency, nonstop) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        'INSERT INTO flights (outbound_date, origin_airport_code, destination_airport_code, price, currency, nonstop) VALUES ($1, $2, $3, $4, $5, $6)',
         [
-          flight.outbound_date, 
-          flight.origin_airport_code, 
-          flight.destination_airport_code, 
-          flight.airline_code, 
+          flight.outboundDate, 
+          flight.origin, 
+          flight.destination,  
           flight.price, 
           flight.currency, 
           flight.nonstop
