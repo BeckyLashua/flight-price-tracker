@@ -42,22 +42,38 @@ const fetchFlightData = async(origin, destination, outboundDate, currencyCode, o
   };
 }
 
-// Prepare API call request
-const origin = 'BOS';
-const destination = 'ORD';
-const outboundDate = '2023-12-10'; 
-const currencyCode = 'USD';
-const oneWay = true;
+/*
+const populateFlightData = async () => {
+  // Prepare API call request
+  const origin = 'BOS';
+  const destination = 'ORD';
+  let insertionDate = new Date();
+  insertionDate.setDate(insertionDate.getDate() - 365 );
+  const currencyCode = 'USD';
+  const oneWay = true;
 
-fetchFlightData(origin, destination, outboundDate, currencyCode, oneWay);
-fetchFlightData(destination, origin, outboundDate, currencyCode, oneWay);
+  for (let i = 0; i < 365; i++) {
+    console.log('insertionDate: ', insertionDate);
+    await fetchFlightData(origin, destination, insertionDate.toISOString().split('T')[0], currencyCode, oneWay);
+    console.log('insertionDate: ', insertionDate);
+  
+    await fetchFlightData(destination, origin, insertionDate.toISOString().split('T')[0], currencyCode, oneWay);
+    insertionDate = new Date(insertionDate.setDate(insertionDate.getDate() + 1));
+  }
+};
 
-// Schedule a task to run this daily
+populateFlightData();
+*/
+
+
+/* Schedule a task to run this daily
 cron.schedule('0 0 * * *', () => {
   console.log('Fetching flight prices...');
+
   fetchFlightData(origin, destination, outboundDate, currencyCode, oneWay);
   fetchFlightData(destination, origin, outboundDate, currencyCode, oneWay);
 });
+*/
 
 
 module.exports = { fetchFlightData };
