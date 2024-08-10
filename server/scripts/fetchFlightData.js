@@ -45,17 +45,18 @@ const fetchFlightData = async(origin, destination, outboundDate, currencyCode, o
 // Prepare API call request
 const origin = 'BOS';
 const destination = 'ORD';
-const outboundDate = '2023-07-09'; 
+const outboundDate = '2023-12-10'; 
 const currencyCode = 'USD';
 const oneWay = true;
 
 fetchFlightData(origin, destination, outboundDate, currencyCode, oneWay);
-
+fetchFlightData(destination, origin, outboundDate, currencyCode, oneWay);
 
 // Schedule a task to run this daily
 cron.schedule('0 0 * * *', () => {
   console.log('Fetching flight prices...');
   fetchFlightData(origin, destination, outboundDate, currencyCode, oneWay);
+  fetchFlightData(destination, origin, outboundDate, currencyCode, oneWay);
 });
 
 
