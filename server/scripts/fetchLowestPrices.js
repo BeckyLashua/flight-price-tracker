@@ -17,14 +17,13 @@ const fetchLowestPrices = async(data) => {
       WHERE outbound_date = $1  
       AND origin_airport_code = $2 
       AND destination_airport_code = $3  
-      AND airline_code = $4  
       AND currency = 'USD'
       AND nonstop = true
       ORDER BY price ASC  
       LIMIT 1;
     `;
     while (currentDate <= endDate ) {
-      const result = await client.query(query, [currentDate.toISOString(), data.origin, data.destination, data.airline]);
+      const result = await client.query(query, [currentDate.toISOString(), data.origin, data.destination]);
       if (result.rows.length > 0) {
         flights.push(result.rows[0]);
       } else {

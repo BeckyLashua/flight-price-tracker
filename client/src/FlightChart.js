@@ -61,7 +61,7 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
               },
             },
             y: {
-              beginAtZero: true,
+              beginAtZero: false,
             }
           },
           plugins: {

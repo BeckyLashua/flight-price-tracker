@@ -65,15 +65,27 @@ const populateFlightData = async () => {
 populateFlightData();
 */
 
+// Schedule a task to run this daily
+cron.schedule('0 0 * * *', async () => {
+  const origin = 'BOS';
+  const destination = 'ORD';
+  const currencyCode = 'USD';
+  const oneWay = true;
+  let insertionDate = new Date();
+  insertionDate = new Date(insertionDate.setDate(insertionDate.getDate() - 1));
+  let formattedDate = insertionDate.toISOString().split('T')[0];
+  console.log(formattedDate);
 
-/* Schedule a task to run this daily
-cron.schedule('0 0 * * *', () => {
-  console.log('Fetching flight prices...');
-
-  fetchFlightData(origin, destination, outboundDate, currencyCode, oneWay);
-  fetchFlightData(destination, origin, outboundDate, currencyCode, oneWay);
+  try {
+    console.log('Fetching flight prices...');
+    await fetchFlightData(origin, destination, formattedDate, currencyCode, oneWay);
+    await fetchFlightData(destination, origin, formattedDate, currencyCode, oneWay);
+    console.log('Flight data fetched and inserted successfully.');
+  } catch (error) {
+    console.error('Error fetching flight data:', error);
+  }
 });
-*/
+
 
 
 module.exports = { fetchFlightData };

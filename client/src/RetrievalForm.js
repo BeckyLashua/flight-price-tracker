@@ -10,8 +10,7 @@ const RetrievalForm = () => {
   const [responseData, setResponseData] = useState(null);
   const [formValues, setFormValues] = useState({
     origin: '',
-    destination: '',
-    airline: '',
+    destination: ''
   });
   const [endDate, setEndDate] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -30,8 +29,8 @@ const RetrievalForm = () => {
     setShowChart(false);
     setShowPriceDisplay(false);
 
-    const { origin, destination, airline } = formValues;
-    if ( !origin || !destination || !airline ) {
+    const { origin, destination } = formValues;
+    if ( !origin || !destination ) {
       setError('Please fill in all fields.');
       setLoading(false);
       return;
@@ -53,8 +52,7 @@ const RetrievalForm = () => {
         startDate: startDate,
         endDate: endDate,
         origin: formValues.origin,
-        destination: formValues.destination,
-        airline: formValues.airline
+        destination: formValues.destination
       }
 
       const response = await axios.post('http://localhost:3001/flight-data', requestData);
@@ -98,18 +96,6 @@ const RetrievalForm = () => {
                 <MenuItem value="ORD">ORD</MenuItem>
               </Select>
             </FormControl>
-            <FormControl>
-              <InputLabel id="airline">Airline</InputLabel>
-              <Select
-                labelId="airline"
-                name="airline"
-                value={formValues.airline}
-                onChange={handleInputChange}
-              >
-                <MenuItem value="AA">American Airlines</MenuItem>
-                <MenuItem value="WN">Southwest</MenuItem>
-              </Select>
-          </FormControl>
           <Button type="submit" variant="contained" color="primary" disabled={loading}>
             {loading ? <CircularProgress size={24} /> : 'Display Flight Prices'}
           </Button>

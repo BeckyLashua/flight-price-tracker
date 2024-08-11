@@ -24,7 +24,7 @@ const LowestPriceDisplay = ( {flightData, startDate, endDate} ) => {
   
   return (
     <Box>
-      <h5>The date and price of the cheapest flight: <p>Date: </p>{cheapestDate} <p>Price: </p>${lowestPrice}.</h5>
+      <h5>The date and price of the cheapest flight: <p>Date: </p>{cheapestDate} <p>Price: </p>${lowestPrice}</h5>
     </Box>
   );
  
