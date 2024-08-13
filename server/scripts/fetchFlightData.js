@@ -66,13 +66,13 @@ populateFlightData();
 */
 
 // Schedule a task to run this daily
-cron.schedule('0 0 * * *', async () => {
+cron.schedule('* * * * *', async () => {
   const origin = 'BOS';
   const destination = 'ORD';
   const currencyCode = 'USD';
   const oneWay = true;
   let insertionDate = new Date();
-  insertionDate = new Date(insertionDate.setDate(insertionDate.getDate() - 1));
+  insertionDate = new Date(insertionDate.setDate(insertionDate.getDate() - 2));
   let formattedDate = insertionDate.toISOString().split('T')[0];
   console.log(formattedDate);
 

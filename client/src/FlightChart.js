@@ -33,7 +33,7 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
         labels,
         datasets: [
           {
-            label: 'Lowest Flight Prices Per Day',
+            label: 'Median Flight Prices Per Day',
             data: prices,
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -68,7 +68,7 @@ const FlightChart = ({ flightData, startDate, endDate}) => {
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  const label = 'Lowest Price' || 'No flights for this date.';
+                  const label = 'Price' || 'No flights for this date.';
                   const date = context.parsed.x; 
                   const value = context.parsed.y !== null ? ` $${context.parsed.y}` : '';
                   return `${label} : ${value}`;
