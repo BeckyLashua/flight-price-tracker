@@ -4,6 +4,16 @@ A web application that monitors real-time flight prices and notifies users of ch
 
 ---
 
+### 👩‍💻 Author
+
+**Rebecca Lashua**  
+🌐 [beckylashua.com](https://beckylashua.com)   
+📧 [beckylashua@gmail.com](mailto:beckylashua@gmail.com)     
+🔗 [LinkedIn](https://www.linkedin.com/in/rebecca-lashua-a75096231/)  
+🐙 [GitHub](https://github.com/BeckyLashua)
+
+--- 
+
 ## Features
 
 - **Real-Time Price Monitoring:** Continuously tracks flight prices for specified routes and dates.
@@ -93,13 +103,3 @@ Open your browser and navigate to http://localhost:3000.
 
 ---
 
-#### 📬 Contact
-
-Thank you for visiting!  
-Feel free to connect with me or explore more of my work:
-
-**Rebecca Lashua**  
-📧 [beckylashua@gmail.com](mailto:beckylashua@gmail.com)  
-🌐 [Portfolio Website](https://beckylashua.com)  
-🔗 [LinkedIn](https://www.linkedin.com/in/rebecca-lashua-a75096231/)
-🐙 [GitHub](https://github.com/BeckyLashua)
